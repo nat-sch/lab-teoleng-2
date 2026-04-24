@@ -40,14 +40,14 @@ def programa6(RutaPdf,RutaXML):
     if n_ocurrencias > 0:
         nuevo_xml = re.sub(pat_linea,'', xml_original)
 
-        pat_total_movs = r'<BanTeng:TotalMovimientos>\s*(\d+)\s*</BanTeng:TotalMovimientos>'
+        pat_total_movimientos = r'<BanTeng:TotalMovimientos>\s*(\d+)\s*</BanTeng:TotalMovimientos>'
         total_movimientos_viejo = int(
-            re.search(pat_total_movs, xml_original).group(1)
+            re.search(pat_total_movimientos, xml_original).group(1)
         )
         total_movimientos_nuevo = total_movimientos_viejo - n_ocurrencias
 
         return re.sub(
-            pat_total_movs,
+            pat_total_movimientos,
             f'<BanTeng:TotalMovimientos>{total_movimientos_nuevo}</BanTeng:TotalMovimientos>',
             nuevo_xml
         )
