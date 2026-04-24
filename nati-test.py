@@ -23,4 +23,4 @@ def testear(n_programa, ruta_xml=""):
 testear(1)
 testear(2)
 testear(5, "entradas/TeoLeng6.xml")
-
+testear(6, "entradas/TeoLeng6.xml")

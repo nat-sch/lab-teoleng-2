@@ -27,7 +27,7 @@ def leer_xml(ruta_xml):
 
 def hacer_patron_busca_linea(fecha_monto):
     fecha, monto = fecha_monto
-    return rf'TipoMov="(D|C)".*Importe="{monto}".*Fecha="{fecha}"'
+    return rf'.*TipoMov="(D|C)".*Importe="{monto}".*Fecha="{fecha}".*\n'
 
 def programa5(RutaPdf,RutaXML):
 
