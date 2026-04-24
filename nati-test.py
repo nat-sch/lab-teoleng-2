@@ -7,6 +7,8 @@ def testear(n_programa):
     print(f"TESTANDO PROGRAMA {n_programa}")
 
     for i in range(5):
+        print("="*10)
+
         os.system(f"cp entradas/factura{i+1}.pdf /tmp/entradas/factura{i+1}.pdf")
         os.system(f"cp salidas/programa{n_programa}_{i+1}.txt /tmp/salidas/programa{n_programa}_{i+1}.txt")
 
@@ -16,8 +18,11 @@ def testear(n_programa):
         os.system(f"cp /tmp/entradas/factura{i+1}.pdf entradas/factura{i+1}.pdf")
         os.system(f"cp /tmp/salidas/programa{n_programa}_{i+1}.txt salidas/programa{n_programa}_{i+1}.txt")
 
+        print("="*10)
+
 
 testear(1)
+testear(2)
 
 os.system("rm -r /tmp/entradas")
 os.system("rm -r /tmp/salidas")
