@@ -2,12 +2,15 @@
 import re
 import sys
 
-from pypdf import PdfReader
+def leer_texto(ruta_pdf):
+    from pypdf import PdfReader
 
-def programa1(RutaPdf):
-    reader = PdfReader(RutaPdf)
+    reader = PdfReader(ruta_pdf)
     pagina_factura = reader.pages[0]
     return pagina_factura.extract_text()
+
+def programa1(RutaPdf):
+    return leer_texto(RutaPdf)
 
 
 if __name__ == '__main__':
