@@ -28,7 +28,7 @@ def hacer_patron_busca_linea(fecha_monto):
     return rf'.*TipoMov="(D|C)".*Importe="{monto}".*Fecha="{fecha}".*\n'
 
 def programa6(RutaPdf,RutaXML):
-    pat = hacer_patron_busca_linea(
+    pat_linea = hacer_patron_busca_linea(
         get_fecha_monto(
             leer_pdf(RutaPdf)
         )
@@ -36,17 +36,18 @@ def programa6(RutaPdf,RutaXML):
 
     xml_original = leer_xml(RutaXML)
 
-    n_ocurrencias = len(re.findall(pat, xml_original))
+    n_ocurrencias = len(re.findall(pat_linea, xml_original))
     if n_ocurrencias > 0:
-        nuevo_xml = re.sub(pat,'', xml_original)
+        nuevo_xml = re.sub(pat_linea,'', xml_original)
 
+        pat_total_movs = r'<BanTeng:TotalMovimientos>\s*(\d+)\s*</BanTeng:TotalMovimientos>'
         total_movimientos_viejo = int(
-            re.search(r'<BanTeng:TotalMovimientos>\s*(\d+)\s*</BanTeng:TotalMovimientos>', xml_original).group(1)
+            re.search(pat_total_movs, xml_original).group(1)
         )
         total_movimientos_nuevo = total_movimientos_viejo - n_ocurrencias
 
         return re.sub(
-            r'<BanTeng:TotalMovimientos>\s*(\d+)\s*</BanTeng:TotalMovimientos>',
+            pat_total_movs,
             f'<BanTeng:TotalMovimientos>{total_movimientos_nuevo}</BanTeng:TotalMovimientos>',
             nuevo_xml
         )
