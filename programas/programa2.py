@@ -2,16 +2,28 @@
 import re
 import sys
 
-def programa2(RutaFactura):
-    
-    '''
-    SU CÓDIGO
-    
-    NOTA: El formato de la fecha debe ser AAAA-MM-DD 
-    '''
-    fecha = "2026-04-01"        
-    monto = 954,25
+def leer_texto(ruta_pdf):
+    from pypdf import PdfReader
+
+    reader = PdfReader(ruta_pdf)
+    pagina_factura = reader.pages[0]
+    return pagina_factura.extract_text()
+
+def get_fecha_monto(texto_factura):
+    import re
+
+    fecha_original = re.search(r'FECHA:\s*(\d*(-|/)\d*(-|/)\d*)', texto_factura).group(1)
+    m = re.search(r'(\d{2})(-|/)(\d{2})(-|/)(\d{4})', fecha_original)
+    dia = m.group(1)
+    mes = m.group(3)
+    anio = m.group(5)
+    fecha = f"{anio}-{mes}-{dia}"
+
+    monto = re.search(r'BANCARIO\s*(\d*,\d*)', texto_factura).group(1)
     return fecha, monto
+
+def programa2(RutaFactura):
+    return get_fecha_monto(leer_texto(RutaFactura))
   
 
 if __name__ == '__main__':
