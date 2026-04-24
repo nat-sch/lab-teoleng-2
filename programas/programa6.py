@@ -38,7 +38,6 @@ def programa6(RutaPdf,RutaXML):
 
     n_ocurrencias = len(re.findall(pat, xml_original))
     if n_ocurrencias > 0:
-
         nuevo_xml = re.sub(pat,'', xml_original)
 
         total_movimientos_viejo = int(
