@@ -2,7 +2,7 @@
 import re
 import sys
 
-def leer_texto(ruta_pdf):
+def leer_pdf(ruta_pdf):
     from pypdf import PdfReader
 
     reader = PdfReader(ruta_pdf)
@@ -10,8 +10,6 @@ def leer_texto(ruta_pdf):
     return pagina_factura.extract_text()
 
 def get_fecha_monto(texto_factura):
-    import re
-
     fecha_original = re.search(r'FECHA:\s*(\d*(-|/)\d*(-|/)\d*)', texto_factura).group(1)
     m = re.search(r'(\d{2})(-|/)(\d{2})(-|/)(\d{4})', fecha_original)
     dia = m.group(1)
@@ -23,7 +21,7 @@ def get_fecha_monto(texto_factura):
     return fecha, monto
 
 def programa2(RutaFactura):
-    return get_fecha_monto(leer_texto(RutaFactura))
+    return get_fecha_monto(leer_pdf(RutaFactura))
   
 
 if __name__ == '__main__':

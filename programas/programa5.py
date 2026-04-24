@@ -2,7 +2,7 @@
 import re
 import sys
 
-def leer_texto(ruta_pdf):
+def leer_pdf(ruta_pdf):
     from pypdf import PdfReader
 
     reader = PdfReader(ruta_pdf)
@@ -10,8 +10,6 @@ def leer_texto(ruta_pdf):
     return pagina_factura.extract_text()
 
 def get_fecha_monto(texto_factura):
-    import re
-
     fecha_original = re.search(r'FECHA:\s*(\d*(-|/)\d*(-|/)\d*)', texto_factura).group(1)
     m = re.search(r'(\d{2})(-|/)(\d{2})(-|/)(\d{4})', fecha_original)
     dia = m.group(1)
@@ -30,12 +28,11 @@ def hacer_patron_busca_linea(fecha_monto):
     return rf'.*TipoMov="(D|C)".*Importe="{monto}".*Fecha="{fecha}".*\n'
 
 def programa5(RutaPdf,RutaXML):
-
     return bool(
         re.search(
             hacer_patron_busca_linea(
                 get_fecha_monto(
-                    leer_texto(RutaPdf)
+                    leer_pdf(RutaPdf)
                 )
             ),
             leer_xml(RutaXML)

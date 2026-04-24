@@ -2,7 +2,7 @@
 import re
 import sys
 
-def leer_texto(ruta_pdf):
+def leer_pdf(ruta_pdf):
     from pypdf import PdfReader
 
     reader = PdfReader(ruta_pdf)
@@ -10,7 +10,7 @@ def leer_texto(ruta_pdf):
     return pagina_factura.extract_text()
 
 def programa1(RutaPdf):
-    return leer_texto(RutaPdf)
+    return leer_pdf(RutaPdf)
 
 
 if __name__ == '__main__':

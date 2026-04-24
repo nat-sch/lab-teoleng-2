@@ -2,7 +2,7 @@
 import re
 import sys
 
-def leer_texto(ruta_pdf):
+def leer_pdf(ruta_pdf):
     from pypdf import PdfReader
 
     reader = PdfReader(ruta_pdf)
@@ -10,8 +10,6 @@ def leer_texto(ruta_pdf):
     return pagina_factura.extract_text()
 
 def get_fecha_monto(texto_factura):
-    import re
-
     fecha_original = re.search(r'FECHA:\s*(\d*(-|/)\d*(-|/)\d*)', texto_factura).group(1)
     m = re.search(r'(\d{2})(-|/)(\d{2})(-|/)(\d{4})', fecha_original)
     dia = m.group(1)
@@ -32,31 +30,31 @@ def hacer_patron_busca_linea(fecha_monto):
 def programa6(RutaPdf,RutaXML):
     pat = hacer_patron_busca_linea(
         get_fecha_monto(
-            leer_texto(RutaPdf)
+            leer_pdf(RutaPdf)
         )
     )
 
-    texto_xml = leer_xml(RutaXML)
+    xml_original = leer_xml(RutaXML)
 
-    n_ocurrencias = len(re.findall(pat, texto_xml))
+    n_ocurrencias = len(re.findall(pat, xml_original))
     if n_ocurrencias > 0:
 
-        nuevo_xml = re.sub(pat,'', texto_xml)
+        nuevo_xml = re.sub(pat,'', xml_original)
 
         total_movimientos_viejo = int(
-            re.search(r'<BanTeng:TotalMovimientos>(\d+)</BanTeng:TotalMovimientos>', texto_xml).group(1)
+            re.search(r'<BanTeng:TotalMovimientos>\s*(\d+)\s*</BanTeng:TotalMovimientos>', xml_original).group(1)
         )
         total_movimientos_nuevo = total_movimientos_viejo - n_ocurrencias
 
         return re.sub(
-            r'<BanTeng:TotalMovimientos>(\d+)</BanTeng:TotalMovimientos>',
+            r'<BanTeng:TotalMovimientos>\s*(\d+)\s*</BanTeng:TotalMovimientos>',
             f'<BanTeng:TotalMovimientos>{total_movimientos_nuevo}</BanTeng:TotalMovimientos>',
             nuevo_xml
         )
     else:
-        return texto_xml
-        
- 
+        return xml_original
+
+
 
 if __name__ == '__main__':
     entrada_pdf = sys.argv[1]  # archivo entrada (param)
