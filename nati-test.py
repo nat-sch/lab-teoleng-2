@@ -1,6 +1,6 @@
 import os
 
-def testear(n_programa):
+def testear(n_programa, ruta_xml=""):
     print(f"TESTANDO PROGRAMA {n_programa}")
 
     os.system("cp -r entradas /tmp")
@@ -9,7 +9,7 @@ def testear(n_programa):
     for i in range(5):
         print("="*10)
 
-        os.system(f"python3 programas/programa{n_programa}.py entradas/factura{i+1}.pdf salidas/programa{n_programa}_{i+1}.txt")
+        os.system(f"python3 programas/programa{n_programa}.py entradas/factura{i+1}.pdf {ruta_xml} salidas/programa{n_programa}_{i+1}.txt")
         os.system(f"diff --strip-trailing-cr salidas/programa{n_programa}_{i+1}.txt salidas_esperadas/programa{n_programa}_{i+1}.txt")
 
         print("="*10)
