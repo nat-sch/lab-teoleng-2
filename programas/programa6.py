@@ -11,10 +11,10 @@ def leer_pdf(ruta_pdf):
 
 def get_fecha_monto(texto_factura):
     fecha_original = re.search(r'FECHA:\s*(\d*(-|/)\d*(-|/)\d*)', texto_factura).group(1)
-    m = re.search(r'(\d{2})(-|/)(\d{2})(-|/)(\d{4})', fecha_original)
-    dia = m.group(1)
-    mes = m.group(3)
-    anio = m.group(5)
+    match = re.search(r'(\d{2})(-|/)(\d{2})(-|/)(\d{4})', fecha_original)
+    dia = match.group(1)
+    mes = match.group(3)
+    anio = match.group(5)
     fecha = f"{anio}-{mes}-{dia}"
 
     monto = re.search(r'BANCARIO\s*(\d*,\d*)', texto_factura).group(1)
