@@ -4,6 +4,8 @@ os.system("mkdir /tmp/entradas")
 os.system("mkdir /tmp/salidas")
 
 def testear(n_programa):
+    print(f"TESTANDO PROGRAMA {n_programa}")
+
     for i in range(5):
         os.system(f"cp entradas/factura{i+1}.pdf /tmp/entradas/factura{i+1}.pdf")
         os.system(f"cp salidas/programa{n_programa}_{i+1}.txt /tmp/salidas/programa{n_programa}_{i+1}.txt")
@@ -16,3 +18,6 @@ def testear(n_programa):
 
 
 testear(1)
+
+os.system("rm -r /tmp/entradas")
+os.system("rm -r /tmp/salidas")
